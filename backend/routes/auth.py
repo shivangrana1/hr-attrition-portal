@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from passlib.hash import bcrypt
 from jose import jwt
 from pydantic import BaseModel
 from database import get_db, User
+import hashlib
+import os
 
 router = APIRouter()
 SECRET = "hr-secret-key-2024"
@@ -17,10 +18,11 @@ class LoginInput(BaseModel):
     password: str
 
 def hash_password(password: str) -> str:
-    return bcrypt.hash(password[:72])
+    salt = "hr_attrition_salt_2024"
+    return hashlib.sha256(f"{salt}{password}".encode()).hexdigest()
 
 def verify_password(password: str, hashed: str) -> bool:
-    return bcrypt.verify(password[:72], hashed)
+    return hash_password(password) == hashed
 
 @router.post("/register")
 def register(data: RegisterInput, db: Session = Depends(get_db)):
