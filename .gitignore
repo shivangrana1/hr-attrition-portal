@@ -1,0 +1,17 @@
+# Backend
+backend/venv/
+backend/__pycache__/
+backend/routes/__pycache__/
+backend/model/model.pkl
+backend/model/feature_names.pkl
+backend/model/global_shap.json
+backend/model/metrics.json
+backend/model/WA_Fn-UseC_-HR-Employee-Attrition.csv
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Environment
+.env
+*.pyc
